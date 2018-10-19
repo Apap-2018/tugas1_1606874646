@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,8 +52,8 @@ public class JabatanController {
 		
 	}
 	
-	@RequestMapping(value="/jabatan/ubah", method=RequestMethod.GET)
-	private String ubahJabatan(@RequestParam(value="jabatanId") String id, Model model) {
+	@RequestMapping(value="/jabatan/ubah/{id_jabatan}", method=RequestMethod.GET)
+	private String ubahJabatan(@PathVariable(value="id_jabatan") String id, Model model) {
 		JabatanModel jabatan = jabatanService.getJabatanById(Long.parseLong(id)).get();
 		model.addAttribute("jabatan", jabatan);
 		return "ubah-jabatan";
