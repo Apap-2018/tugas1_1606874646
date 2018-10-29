@@ -1,7 +1,5 @@
 package com.apap.tugas1.service;
 
-import com.apap.tugas1.repository.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.apap.tugas1.model.JabatanModel;
+import com.apap.tugas1.repository.JabatanDB;
 
 @Service
 @Transactional
@@ -51,6 +50,17 @@ public class JabatanServiceImpl implements JabatanService{
 		jabatanUpdate.setDeskripsi(jabatan.getDeskripsi());
 		JabatanDB.save(jabatanUpdate);
 }
+
+
+	@Override
+	public JabatanModel getJabatanDetailById(Long id) {
+		return JabatanDB.findJabatanById(id);
+}
 		
-	}
+	@Override
+	public List<JabatanModel> getAllJabatan() {
+		return JabatanDB.findAll();
+}	
+
+}
 

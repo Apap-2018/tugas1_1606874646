@@ -2,7 +2,11 @@ package com.apap.tugas1.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -59,20 +64,20 @@ public class PegawaiModel implements Serializable{
 		this.tempat_lahir = tempat_lahir;
 	}
 
-	public Date getTanggal_lahir() {
+	public Date getTanggalLahir() {
 		return tanggalLahir;
 	}
 
-	public void setTanggal_lahir(Date tanggal_lahir) {
-		this.tanggalLahir = tanggal_lahir;
+	public void setTanggalLahir(Date tanggalLahir) {
+		this.tanggalLahir = tanggalLahir;
 	}
 
-	public String getTahun_masuk() {
-		return tahun_masuk;
+	public String getTahunMasuk() {
+		return tahunMasuk;
 	}
 
-	public void setTahun_masuk(String tahun_masuk) {
-		this.tahun_masuk = tahun_masuk;
+	public void setTahunMasuk(String tahun_masuk) {
+		this.tahunMasuk = tahunMasuk;
 	}
 
 	public InstansiModel getInstansi() {
@@ -99,13 +104,13 @@ public class PegawaiModel implements Serializable{
 	private String tempat_lahir;
 	
 	@NotNull
-	@Column(name="tanggal_lahir",nullable=false)
+	@Column(name="tanggalLahir",nullable=false)
 	private Date tanggalLahir;
 	
 	@NotNull
 	@Size(max=255)
-	@Column(name="tahun_masuk",nullable=false)
-	private String tahun_masuk;
+	@Column(name="tahunMasuk",nullable=false)
+	private String tahunMasuk;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_instansi",referencedColumnName="id", nullable=false)
@@ -113,4 +118,41 @@ public class PegawaiModel implements Serializable{
 	@JsonIgnore
 	private InstansiModel instansi;
 	
+//	@OneToMany(mappedBy="pegawai", fetch=FetchType.LAZY)
+//	@OnDelete(action= OnDeleteAction.CASCADE)
+//	@JsonIgnore
+//	private List<JabatanModel> jabatanList;
+	
+	@OneToMany(mappedBy = "pegawai", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private List<JabatanPegawaiModel> listJabatanPegawai;
+	
+//	public void setJabatanList(List<JabatanModel> jabatanList) {
+//		// TODO Auto-generated method stub
+//		this.jabatanList = jabatanList;
+//	}
+//	public List<JabatanModel> getJabatanList() {
+//		return jabatanList;
+//
+//}
+
+
+	public String getTanggalLahirStr() {
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyy");
+		String tglLahir = dateFormat.format(tanggalLahir);
+		return tglLahir;
+}
+	
+	public String getTahunLahir() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy");
+		String tahunLahir = dateFormat.format(tanggalLahir);
+		return tahunLahir;
+}
+
+	public List<JabatanPegawaiModel> getListJabatanPegawai() {
+		return listJabatanPegawai;
+	}
+
+	public void setListJabatanPegawai(List<JabatanPegawaiModel> listJabatanPegawai) {
+		this.listJabatanPegawai = listJabatanPegawai;
+}
 }

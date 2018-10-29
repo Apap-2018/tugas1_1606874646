@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="jabatan_pegawai")
 public class JabatanPegawaiModel implements Serializable{
@@ -32,12 +34,14 @@ public class JabatanPegawaiModel implements Serializable{
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_pegawai", referencedColumnName="id", nullable=false)
 	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	@JsonIgnore
 	private PegawaiModel pegawai;
 	
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "id_jabatan", referencedColumnName="id", nullable=false)
-	@OnDelete(action = OnDeleteAction.NO_ACTION)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private JabatanModel jabatan;
 	
 	public JabatanModel getJabatan() {

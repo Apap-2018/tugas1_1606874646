@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
@@ -5,19 +6,9 @@
 		<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 		<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	</head>
+	
 	<body>
 		<nav th:replace="fragments/fragment :: navbar"></nav>
-		
-		<!-- <div class="container-fluid">
-			<td th:text="'NIP : ' + ${pegawai.nip}"></td><br>
-			<td th:text="'Nama : ' + ${pegawai.nama}"></td><br>
-			<td th:text="'Tempat Lahir : ' + ${pegawai.tempat_lahir}"></td><br>
-			<td th:text="'Tanggal Lahir : ' + ${pegawai.tanggal_lahir}"></td><br>
-			<td th:text="'Tahun Masuk : ' + ${pegawai.tahun_masuk}"></td><br>
-			<td th:text="'Nama Instansi : ' + ${pegawai.instansi.nama}"></td><br>
-			<td th:text="'Jabatan : ' + ${jabatanPegawai.jabatan}"></td><br>
-			<td th:text="'Gaji : ' + ${jabatanPegawai.jabatan.gaji_pokok}"></td><br>
-		</div> -->
 		
 		<table>
 			<tr>
@@ -34,11 +25,11 @@
 			</tr>
 			<tr>
 				<td>Tanggal Lahir</td>
-				<td th:text="${pegawai.tanggal_lahir}"></td>
+				<td th:text="${pegawai.tanggalLahir}"></td>
 			</tr>
 			<tr>
 				<td>Tahun Masuk</td>
-				<td th:text="${pegawai.tahun_masuk}"></td>
+				<td th:text="${pegawai.tahunMasuk}"></td>
 			</tr>
 			<tr>
 				<td>Nama Instansi</td>
@@ -57,7 +48,9 @@
 			</tr>
 			
 		</table>
-		
-		<a th:href="@{'/pegawai/ubah/' + ${pegawai.nip}}" >Ubah Pegawai</a><br>
+		<form th:action="@{'/pegawai/ubah'}" method="GET">
+				<input type="hidden" th:value="${pegawai.nip}" name="nip" />
+				<button type="submit" class="btn btn-primary">Ubah</button>
+		</form>
 	</body>
 </html>
